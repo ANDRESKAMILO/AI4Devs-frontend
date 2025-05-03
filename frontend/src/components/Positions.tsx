@@ -1,7 +1,10 @@
 import React from 'react';
 import { Card, Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { House } from 'react-bootstrap-icons';
 
 type Position = {
+    id?: number;
     title: string;
     manager: string;
     deadline: string;
@@ -9,15 +12,40 @@ type Position = {
 };
 
 const mockPositions: Position[] = [
-    { title: 'Senior Backend Engineer', manager: 'John Doe', deadline: '2024-12-31', status: 'Abierto' },
-    { title: 'Junior Android Engineer', manager: 'Jane Smith', deadline: '2024-11-15', status: 'Contratado' },
-    { title: 'Product Manager', manager: 'Alex Jones', deadline: '2024-07-31', status: 'Borrador' }
+    { id: 1, title: 'Ingeniero Senior de Backend', manager: 'John Doe', deadline: '2024-12-31', status: 'Abierto' },
+    { id: 2, title: 'Ingeniero Junior de Android', manager: 'Jane Smith', deadline: '2024-11-15', status: 'Contratado' },
+    { id: 3, title: 'Gerente de Producto', manager: 'Alex Jones', deadline: '2024-07-31', status: 'Borrador' }
 ];
 
 const Positions: React.FC = () => {
+    const navigate = useNavigate();
+
+    console.log('Renderizando componente Positions');
+
+    const handleViewProcess = (positionId: number | undefined) => {
+        if (positionId) {
+            console.log('Navegando a la posición con ID:', positionId);
+            const path = `/positions/${positionId}`;
+            console.log('Ruta de navegación:', path);
+            navigate(path);
+        } else {
+            console.error('Se intentó navegar a una posición sin ID');
+        }
+    };
+
     return (
         <Container className="mt-5">
-            <h2 className="text-center mb-4">Posiciones</h2>
+            <div className="d-flex align-items-center mb-4">
+                <button 
+                    onClick={() => navigate('/')} 
+                    className="btn btn-link text-decoration-none me-3"
+                    style={{ color: '#0d6efd' }}
+                    title="Ir al inicio"
+                >
+                    <House size={22} />
+                </button>
+                <h2 className="mb-0 flex-grow-1 text-center">Posiciones</h2>
+            </div>
             <Row className="mb-4">
                 <Col md={3}>
                     <Form.Control type="text" placeholder="Buscar por título" />
@@ -57,7 +85,12 @@ const Positions: React.FC = () => {
                                     {position.status}
                                 </span>
                                 <div className="d-flex justify-content-between mt-3">
-                                    <Button variant="primary">Ver proceso</Button>
+                                    <Button 
+                                        variant="primary" 
+                                        onClick={() => handleViewProcess(position.id)}
+                                    >
+                                        Ver proceso
+                                    </Button>
                                     <Button variant="secondary">Editar</Button>
                                 </div>
                             </Card.Body>

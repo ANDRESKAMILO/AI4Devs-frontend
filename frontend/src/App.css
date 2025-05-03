@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
@@ -35,4 +38,70 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Estilos para el tablero Kanban */
+.kanban-board {
+  overflow-x: auto;
+}
+
+.kanban-column {
+  min-width: 280px;
+  transition: background-color 0.3s;
+}
+
+.candidate-card {
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.candidate-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Estilos para el kanban en dispositivos móviles */
+@media (max-width: 768px) {
+  .kanban-row {
+    flex-direction: column;
+  }
+  
+  .kanban-column {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Estilos para la puntuación de estrellas */
+.star-rating {
+  color: #ffc107;
+}
+
+.star-empty {
+  color: #ced4da;
+}
+
+/* Estilos para las notificaciones */
+.notification-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Animación de transición para las tarjetas */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
 }
